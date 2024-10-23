@@ -1,5 +1,7 @@
 package Memento.guistate;
 
+import java.time.LocalDateTime;
+
 public class Model {
     private int[] options = new int[3];
     private boolean isSelected;
@@ -29,7 +31,7 @@ public class Model {
 
     // method to save the state of the model
     public IMemento createMemento() {
-        return new Memento(options, isSelected);
+        return new Memento(options, isSelected, LocalDateTime.now());
     }
 
     // method to restore the state of the model
@@ -41,4 +43,5 @@ public class Model {
         System.out.println("isSelected: " + isSelected);
         System.out.println("State restored");
     }
+
 }

@@ -3,6 +3,7 @@ package Memento.guistate;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -44,11 +45,22 @@ public class Gui extends Application {
         hBox.setMargin(colorBox3.getRectangle(), insets);
 
 
-        Label label = new Label("Press Ctrl-Z to undo the last change.");
-        label.setPadding(insets);
+        Label labelZ = new Label("Press Ctrl-Z to undo the last change.");
+        labelZ.setPadding(insets);
+        Label labelY = new Label("press the Ctrl+Y key combination to redo the last undone action.");
+        labelY.setPadding(insets);
+
+        Button historyButton = new Button("Show History");
+        historyButton.setPadding(insets);
+        VBox.setMargin(historyButton, new Insets(30, 0, 20, 250));
+
+        historyButton.setOnAction(event -> {
+            HistoryWindow historyWindow = new HistoryWindow(controller.getHistory(), controller); // 传递当前 Controller
+            historyWindow.show();
+        });
 
         // create a VBox that contains the HBox and the CheckBox
-        VBox vBox = new VBox(hBox, checkBox, label);
+        VBox vBox = new VBox(hBox, checkBox, labelZ, labelY, historyButton);
         // call controller when the CheckBox is clicked
         checkBox.setOnAction(event -> {
             controller.setIsSelected(checkBox.isSelected());
@@ -61,9 +73,12 @@ public class Gui extends Application {
                 // Ctrl-Z: undo
                 System.out.println("Undo key combination pressed");
                 controller.undo();
+            } else if (event.isControlDown() && event.getCode() == KeyCode.Y) {
+                // Ctrl-Y: redo
+                System.out.println("Redo key combination pressed");
+                controller.redo();
             }
         });
-
 
         stage.setScene(scene);
         stage.setTitle("Memento Pattern Example");
