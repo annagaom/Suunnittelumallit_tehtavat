@@ -47,7 +47,7 @@ public class Gui extends Application {
 
         Label labelZ = new Label("Press Ctrl-Z to undo the last change.");
         labelZ.setPadding(insets);
-        Label labelY = new Label("press the Ctrl+Y key combination to redo the last undone action.");
+        Label labelY = new Label("press the Ctrl+Y to redo the last undone action.");
         labelY.setPadding(insets);
 
         Button historyButton = new Button("Show History");
