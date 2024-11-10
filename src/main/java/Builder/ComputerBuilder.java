@@ -1,4 +1,4 @@
-package builder;
+package Builder;
 
 public interface ComputerBuilder {
     void buildProcessor();

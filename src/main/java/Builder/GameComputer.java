@@ -1,4 +1,4 @@
-package builder;
+package Builder;
 
 public class GameComputer implements ComputerBuilder {
     private Computer computer;
