@@ -5,6 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.text.Text;
 
 public class ChatClient {
     private String username;
@@ -28,21 +29,42 @@ public class ChatClient {
     }
 
     public void sendMessage() {
-        String recipient = recipientChoiceBox.getValue();
         String message = messageField.getText();
+        String recipient = recipientChoiceBox.getValue();
+        String sender = username;
 
-        if (recipient == null || message.isEmpty()) {
-            showError("Recipient and message cannot be empty!");
-            return;
+        if (!message.isEmpty()) {
+            // Display the message in the sender's TextArea immediately
+           // messageArea.appendText(sender + " -> " + recipient + ": " + message + "\n");
+            messageArea.setScrollTop(Double.MAX_VALUE); // Scroll to the bottom
+
+            // Send the message to the mediator, which will route it to the recipient
+            mediator.sendMessage(sender, recipient, message);
+
+            messageField.clear(); // Clear the message input field after sending
+        }
+    }
+
+
+    public void receiveMessage(String sender, String message) {
+        // Create the formatted message with sender and message
+        String formattedMessage = sender + ": " + message + "\n";
+
+        // Check if the current client is the recipient
+        if (sender.equals(username)) {
+            // Align the sender's messages to the left
+            messageArea.appendText(formattedMessage);  // Just append the text as normal
+        } else {
+            // Simulate right alignment for the recipient
+            String indentedMessage = formattedMessage;  // Add space to simulate right alignment
+
+            messageArea.appendText(indentedMessage);  // Append the indented message
         }
 
-        mediator.sendMessage(message, username, recipient);
-        messageField.clear();
+        // Scroll to the bottom of the message area
+        messageArea.setScrollTop(Double.MAX_VALUE);
     }
 
-    public void receiveMessage(String message, String sender) {
-        messageArea.appendText(sender + ": " + message + "\n");
-    }
 
     private void showError(String message) {
         Alert alert = new Alert(AlertType.ERROR);
@@ -51,4 +73,5 @@ public class ChatClient {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

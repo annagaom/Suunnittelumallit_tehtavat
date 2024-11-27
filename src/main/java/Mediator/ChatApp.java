@@ -67,7 +67,7 @@ public class ChatApp extends Application {
         // Add 20px margin to the whole VBox layout (padding for the entire VBox)
         layout.setPadding(new Insets(20));
 
-        Scene scene = new Scene(layout, 400, 400);
+        Scene scene = new Scene(layout, 300, 400);
 
         Stage clientStage = new Stage();
         clientStage.setTitle("Chat - " + username);
