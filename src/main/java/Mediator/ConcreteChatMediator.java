@@ -24,8 +24,4 @@ public class ConcreteChatMediator implements ChatMediator {
         clients.put(client.getUsername(), client);
     }
 
-    @Override
-    public void receiveMessage(String message, String sender) {
-        clients.values().forEach(client -> client.receiveMessage(message, sender));
-    }
 }

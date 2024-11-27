@@ -1,11 +1,8 @@
 package Mediator;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.text.Text;
 
 public class ChatClient {
     private String username;
@@ -35,43 +32,46 @@ public class ChatClient {
 
         if (!message.isEmpty()) {
             // Display the message in the sender's TextArea immediately
-           // messageArea.appendText(sender + " -> " + recipient + ": " + message + "\n");
             messageArea.setScrollTop(Double.MAX_VALUE); // Scroll to the bottom
 
             // Send the message to the mediator, which will route it to the recipient
             mediator.sendMessage(sender, recipient, message);
-
-            messageField.clear(); // Clear the message input field after sending
+            messageField.clear();
         }
     }
 
-
     public void receiveMessage(String sender, String message) {
-        // Create the formatted message with sender and message
-        String formattedMessage = sender + ": " + message + "\n";
+        messageArea.setWrapText(true); // Enable text wrapping
+        String formattedMessage = sender + ": " + message;
 
-        // Check if the current client is the recipient
-        if (sender.equals(username)) {
-            // Align the sender's messages to the left
-            messageArea.appendText(formattedMessage);  // Just append the text as normal
-        } else {
-            // Simulate right alignment for the recipient
-            String indentedMessage = formattedMessage;  // Add space to simulate right alignment
+        // Approximate width of one character in pixels (adjust as needed)
+        double charWidth = 7;
+        double messageAreaWidth = messageArea.getWidth();
+        int totalCharsPerLine = (int) (messageAreaWidth / charWidth); // Calculate total characters per line
 
-            messageArea.appendText(indentedMessage);  // Append the indented message
+        // Indent the first line
+        String indentedMessage = formattedMessage;
+
+        // Split the message into lines if it exceeds the width
+        StringBuilder wrappedMessage = new StringBuilder();
+        int currentLineLength = 0;
+
+        for (String word : indentedMessage.split(" ")) {
+            // Add the word and a space
+            currentLineLength += word.length() + 1;
+
+            // If the current line exceeds the total characters per line
+            if (currentLineLength > totalCharsPerLine) {
+                currentLineLength = word.length() + 1; // Reset line length with the current word
+            }
+
+            wrappedMessage.append(word).append(" "); // Append the word
         }
+
+        // Append the wrapped and aligned message
+        messageArea.appendText(wrappedMessage.toString().trim() + "\n");
 
         // Scroll to the bottom of the message area
         messageArea.setScrollTop(Double.MAX_VALUE);
     }
-
-
-    private void showError(String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }
