@@ -1,10 +1,6 @@
 package Command;
 
-
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-
-public class MoveCursorUpCommand {
+public class MoveCursorUpCommand implements Command {
     private MoveSystem moveSystem;
 
     public MoveCursorUpCommand(MoveSystem moveSystem) {

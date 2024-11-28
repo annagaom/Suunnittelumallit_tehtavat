@@ -1,13 +1,16 @@
 package Command;
 
-public class TogglePixelCommand {
-    private GenerateCodeCommand generateCodeCommand;
+public class TogglePixelCommand implements Command {
+    private MoveSystem moveSystem;
 
-    public TogglePixelCommand(GenerateCodeCommand generateCodeCommand) {
-        this.generateCodeCommand = generateCodeCommand;
+
+    public TogglePixelCommand(MoveSystem moveSystem) {
+        this.moveSystem = moveSystem;
     }
 
     public void execute() {
-        generateCodeCommand.togglePixelChange();
+        moveSystem.togglePixelChange();
+        System.out.println("Pixel's color toggled");
     }
+
 }

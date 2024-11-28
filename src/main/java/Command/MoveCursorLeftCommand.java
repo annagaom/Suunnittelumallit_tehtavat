@@ -1,6 +1,6 @@
 package Command;
 
-public class MoveCursorLeftCommand {
+public class MoveCursorLeftCommand implements Command {
     private MoveSystem moveSystem;
 
     public MoveCursorLeftCommand(MoveSystem moveSystem) {

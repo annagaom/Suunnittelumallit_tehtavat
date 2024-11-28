@@ -1,7 +1,5 @@
 package Command;
 
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -16,19 +14,6 @@ public class MoveSystem {
         updateCursor();
     }
 
-    public void setupControls(Scene scene) {
-        scene.setOnKeyPressed(event -> {
-            KeyCode key = event.getCode();
-            switch (key) {
-                case UP -> moveCursor(-1, 0);
-                case DOWN -> moveCursor(1, 0);
-                case LEFT -> moveCursor(0, -1);
-                case RIGHT -> moveCursor(0, 1);
-                case SPACE -> togglePixel();
-            }
-        });
-    }
-
     private void moveCursor(int rowOffset, int colOffset) {
         int newRow = cursorRow + rowOffset;
         int newCol = cursorCol + colOffset;
@@ -40,25 +25,17 @@ public class MoveSystem {
         }
     }
 
-    private void togglePixel() {
-        Rectangle rect = grid[cursorRow][cursorCol];
-        if (rect.getFill() == Color.PINK) {
-            rect.setFill(Color.LIGHTGRAY);
-        } else {
-            rect.setFill(Color.PINK);
-        }
-    }
-
     private void updateCursor() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 grid[row][col].setStroke(Color.BLACK);
             }
         }
-        grid[cursorRow][cursorCol].setStroke(Color.RED);
+        grid[cursorRow][cursorCol].setStroke(Color.PINK);
     }
 
     public void moveCursorUp() {
+
         moveCursor(-1, 0);
     }
 
@@ -74,4 +51,19 @@ public class MoveSystem {
         moveCursor(0, 1);
     }
 
+    public int getCursorRow() {
+        return cursorRow;
+    }
+
+    public int getCursorCol() {
+        return cursorCol;
+    }
+
+    public void togglePixelChange() {
+        int row = getCursorRow();
+        int col = getCursorCol();
+        int currentState = grid[row][col].getFill() == Color.PINK ? 1 : 0;
+        int newState = (currentState == 1) ? 0 : 1;
+        grid[row][col].setFill(newState == 1 ? Color.PINK : Color.LIGHTGRAY);
+    }
 }

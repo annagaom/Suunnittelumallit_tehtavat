@@ -1,10 +1,10 @@
 package Command;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
@@ -13,9 +13,6 @@ public class GUI extends Application {
     public void start(Stage stage) {
         GenerateCodeCommand generateCodeCommand = new GenerateCodeCommand(); // Creates the status window logic
         generateCodeCommand.start(stage); // Initialize the grid in GenerateCodeCommand
-
-        // Now get the grid from GenerateCodeCommand after it has been created
-        Rectangle[][] grid = generateCodeCommand.getGrid();
 
         VBox layout = new VBox(10); // Layout for the main window
         layout.setPadding(new Insets(20));
@@ -27,8 +24,8 @@ public class GUI extends Application {
 
         // When button is clicked, create a new Stage for the status window
         statusButton.setOnAction(e -> {
-            Stage statusStage = new Stage(); // Create new Stage
-            generateCodeCommand.start(statusStage); // Start the status window (use statusStage)
+            Stage statusStage = new Stage();
+            generateCodeCommand.start(statusStage);
         });
 
         // Set the main window scene and show it
