@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class GenerateCodeCommand extends Application {
     private static final int GRID_SIZE = 8;
     private static final int CELL_SIZE = 40;
+    private Rectangle[][] grid;
     private int[][] pixelArt = {
             {0, 0, 1, 1, 1, 1, 0, 0},
             {0, 0, 1, 1, 1, 1, 0, 0},
@@ -24,7 +25,6 @@ public class GenerateCodeCommand extends Application {
             {0, 1, 0, 0, 0, 0, 1, 0},
             {1, 0, 0, 0, 0, 1, 0, 1}
     };
-    private Rectangle[][] grid;
 
     @Override
     public void start(Stage stage) {
